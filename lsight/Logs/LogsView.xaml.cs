@@ -12,14 +12,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace lsight
+namespace lsight.Logs
 {
     /// <summary>
-    /// Interaction logic for ShellView.xaml
+    /// Interaction logic for LogsView.xaml
     /// </summary>
-    public partial class ShellView : UserControl
+    public partial class LogsView : UserControl
     {
-        public ShellView()
+        public LogsView()
         {
             InitializeComponent();
         }

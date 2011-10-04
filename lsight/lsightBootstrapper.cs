@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Primitives;
 using System.Linq;
 using Caliburn.Micro;
+using lsight.Shell;
 
 namespace lsight
 {
@@ -24,6 +25,14 @@ namespace lsight
             batch.AddExportedValue(container);
 
             container.Compose(batch);
+        }
+
+        protected override void OnStartup(object sender, System.Windows.StartupEventArgs e)
+        {
+            base.OnStartup(sender, e);
+
+            Application.MainWindow.Height = 300;
+            Application.MainWindow.Width = 300;
         }
 
         protected override object GetInstance(Type serviceType, string key)
