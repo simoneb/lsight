@@ -65,7 +65,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LoadFile.cs" />
+    <Compile Include="Events\LogFileDefinitionAdded.cs" />
+    <Compile Include="Events\LogFileDefinitionRemoved.cs" />
     <Compile Include="Logs\ILogs.cs" />
     <Compile Include="Logs\LogsView.xaml.cs">
       <DependentUpon>LogsView.xaml</DependentUpon>
@@ -78,6 +79,7 @@
       <DependentUpon>ExistingLogFileDefinitionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings\LogFileDefinition\ExistingLogFileDefinitionViewModel.cs" />
+    <Compile Include="Settings\LogFileDefinition\ILogFileDefinition.cs" />
     <Compile Include="Settings\LogFileDefinition\LogFileDefinitionView.xaml.cs">
       <DependentUpon>LogFileDefinitionView.xaml</DependentUpon>
     </Compile>
@@ -146,6 +148,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

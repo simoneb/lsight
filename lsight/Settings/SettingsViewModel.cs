@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
+using lsight.Events;
 using lsight.Settings.LogFileDefinition;
+using System.Linq;
 
 namespace lsight.Settings
 {
@@ -12,7 +15,7 @@ namespace lsight.Settings
         public SettingsViewModel(IEventAggregator aggregator)
         {
             NewLogFileDefinition = new NewLogFileDefinitionViewModel(aggregator);
-            LogDefinitions = new ObservableCollection<ExistingLogFileDefinitionViewModel>();
+            LogDefinitions = new ObservableCollection<ILogFileDefinition>();
 
             this.aggregator = aggregator;
 
@@ -31,10 +34,10 @@ namespace lsight.Settings
             }
         }
 
-        private ObservableCollection<ExistingLogFileDefinitionViewModel> logDefinitions;
+        private ObservableCollection<ILogFileDefinition> logDefinitions;
         private readonly IEventAggregator aggregator;
 
-        public ObservableCollection<ExistingLogFileDefinitionViewModel> LogDefinitions
+        public ObservableCollection<ILogFileDefinition> LogDefinitions
         {
             get { return logDefinitions; }
             set
@@ -47,11 +50,13 @@ namespace lsight.Settings
         public void Handle(AddLogFileDefinitionCommand message)
         {
             LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(message.Path, message.Color, aggregator));
+            aggregator.Publish(new LogFileDefinitionAdded(message.Path, message.Color));
         }
 
         public void Handle(RemoveLogFileDefinitionCommand message)
         {
-            LogDefinitions.Remove(message.ExistingLog);
+            LogDefinitions.Remove(LogDefinitions.Single(d => d.Path.Equals(message.Path)));
+            aggregator.Publish(new LogFileDefinitionRemoved(message.Path));
         }
     }
 }

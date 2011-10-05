@@ -1,9 +1,10 @@
 ﻿using System.Windows.Media;
 using Caliburn.Micro;
+using Microsoft.Win32;
 
 namespace lsight.Settings.LogFileDefinition
 {
-    public class LogFileDefinitionViewModel : PropertyChangedBase
+    public class LogFileDefinitionViewModel : PropertyChangedBase, ILogFileDefinition
     {
         private string path;
 
@@ -27,6 +28,19 @@ namespace lsight.Settings.LogFileDefinition
                 color = value;
                 NotifyOfPropertyChange(() => Color);
             }
+        }
+
+        public void Browse()
+        {
+            var dialog = new OpenFileDialog
+            {
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Multiselect = false
+            };
+
+            if (dialog.ShowDialog() == true)
+                Path = dialog.FileName;
         }
     }
 }

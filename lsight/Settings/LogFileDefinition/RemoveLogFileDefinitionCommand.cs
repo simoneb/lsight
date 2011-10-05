@@ -2,11 +2,11 @@
 {
     internal class RemoveLogFileDefinitionCommand
     {
-        public ExistingLogFileDefinitionViewModel ExistingLog { get; set; }
+        public string Path { get; set; }
 
-        public RemoveLogFileDefinitionCommand(ExistingLogFileDefinitionViewModel existingLog)
+        public RemoveLogFileDefinitionCommand(string path)
         {
-            ExistingLog = existingLog;
+            Path = path;
         }
     }
 }

@@ -3,10 +3,10 @@ using Caliburn.Micro;
 
 namespace lsight.Settings.LogFileDefinition
 {
-    class ExistingLogFileDefinitionViewModel : PropertyChangedBase
+    class ExistingLogFileDefinitionViewModel : PropertyChangedBase, ILogFileDefinition
     {
         private readonly IEventAggregator aggregator;
-        private LogFileDefinitionViewModel definition;
+        private ILogFileDefinition definition;
 
         public ExistingLogFileDefinitionViewModel(string path, Color color, IEventAggregator aggregator)
         {
@@ -14,7 +14,7 @@ namespace lsight.Settings.LogFileDefinition
             Definition = new LogFileDefinitionViewModel {Color = color, Path = path};
         }
 
-        public LogFileDefinitionViewModel Definition
+        public ILogFileDefinition Definition
         {
             get { return definition; }
             set
@@ -24,9 +24,21 @@ namespace lsight.Settings.LogFileDefinition
             }
         }
 
+        public string Path
+        {
+            get { return definition.Path; }
+            set { definition.Path = value; }
+        }
+
+        public Color Color
+        {
+            get { return definition.Color; }
+            set { definition.Color = value; }
+        }
+
         public void Remove()
         {
-            aggregator.Publish(new RemoveLogFileDefinitionCommand(this));
+            aggregator.Publish(new RemoveLogFileDefinitionCommand(Path));
         }
     }
 }
