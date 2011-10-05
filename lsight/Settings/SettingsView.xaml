@@ -9,17 +9,11 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <ContentControl x:Name="NewLogDefinition" ></ContentControl>
-            <Button x:Name="Add">Add</Button>
-        </StackPanel>
-        <ItemsControl x:Name="LogFiles" Grid.Row="1">
+        <ContentControl x:Name="NewLogFileDefinition" Grid.Row="0"></ContentControl>
+        <ItemsControl x:Name="LogDefinitions" Grid.Row="1">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                        <ContentControl Micro:View.Model="{Binding}" ></ContentControl>
-                        <Button>Remove</Button>
-                    </StackPanel>
+                    <ContentControl Margin="0,5,0,0" Micro:View.Model="{Binding}" ></ContentControl>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

@@ -6,43 +6,52 @@ using lsight.Settings.LogFileDefinition;
 namespace lsight.Settings
 {
     [Export(typeof (ISettings))]
-    internal class SettingsViewModel : Screen, ISettings
+    internal class SettingsViewModel : Screen, ISettings, IHandle<AddLogFileDefinitionCommand>, IHandle<RemoveLogFileDefinitionCommand>
     {
-        public SettingsViewModel()
+        [ImportingConstructor]
+        public SettingsViewModel(IEventAggregator aggregator)
         {
-            NewLogDefinition = new LogFileDefinitionViewModel();
+            NewLogFileDefinition = new NewLogFileDefinitionViewModel(aggregator);
+            LogDefinitions = new ObservableCollection<ExistingLogFileDefinitionViewModel>();
 
-            LogFiles = new ObservableCollection<ILogFileDefinition>();
+            this.aggregator = aggregator;
+
+            aggregator.Subscribe(this);
         }
 
-        private ILogFileDefinition newLogDefinition;
+        private NewLogFileDefinitionViewModel newLogDefinition;
 
-        public ILogFileDefinition NewLogDefinition
+        public NewLogFileDefinitionViewModel NewLogFileDefinition
         {
             get { return newLogDefinition; }
             set
             {
                 newLogDefinition = value;
-                NotifyOfPropertyChange(() => NewLogDefinition);
+                NotifyOfPropertyChange(() => NewLogFileDefinition);
             }
         }
 
-        private ObservableCollection<ILogFileDefinition> logFiles;
+        private ObservableCollection<ExistingLogFileDefinitionViewModel> logDefinitions;
+        private readonly IEventAggregator aggregator;
 
-        public ObservableCollection<ILogFileDefinition> LogFiles
+        public ObservableCollection<ExistingLogFileDefinitionViewModel> LogDefinitions
         {
-            get { return logFiles; }
+            get { return logDefinitions; }
             set
             {
-                logFiles = value;
-                NotifyOfPropertyChange(() => LogFiles);
+                logDefinitions = value;
+                NotifyOfPropertyChange(() => LogDefinitions);
             }
         }
 
-        public void Add()
+        public void Handle(AddLogFileDefinitionCommand message)
         {
-            LogFiles.Add(NewLogDefinition);
-            NewLogDefinition = new LogFileDefinitionViewModel();
+            LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(message.Path, message.Color, aggregator));
+        }
+
+        public void Handle(RemoveLogFileDefinitionCommand message)
+        {
+            LogDefinitions.Remove(message.ExistingLog);
         }
     }
 }

@@ -73,11 +73,20 @@
     <Compile Include="Logs\LogsViewModel.cs" />
     <Compile Include="lsightBootstrapper.cs" />
     <Compile Include="Settings\ISettings.cs" />
-    <Compile Include="Settings\LogFileDefinition\ILogFileDefinition.cs" />
+    <Compile Include="Settings\LogFileDefinition\AddLogFileDefinitionCommand.cs" />
+    <Compile Include="Settings\LogFileDefinition\ExistingLogFileDefinitionView.xaml.cs">
+      <DependentUpon>ExistingLogFileDefinitionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\LogFileDefinition\ExistingLogFileDefinitionViewModel.cs" />
     <Compile Include="Settings\LogFileDefinition\LogFileDefinitionView.xaml.cs">
       <DependentUpon>LogFileDefinitionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings\LogFileDefinition\LogFileDefinitionViewModel.cs" />
+    <Compile Include="Settings\LogFileDefinition\NewLogFileDefinitionView.xaml.cs">
+      <DependentUpon>NewLogFileDefinitionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\LogFileDefinition\NewLogFileDefinitionViewModel.cs" />
+    <Compile Include="Settings\LogFileDefinition\RemoveLogFileDefinitionCommand.cs" />
     <Compile Include="Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -117,7 +126,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Settings\LogFileDefinition\ExistingLogFileDefinitionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Settings\LogFileDefinition\LogFileDefinitionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings\LogFileDefinition\NewLogFileDefinitionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -3,7 +3,7 @@ using Caliburn.Micro;
 
 namespace lsight.Settings.LogFileDefinition
 {
-    internal class LogFileDefinitionViewModel : PropertyChangedBase, ILogFileDefinition
+    public class LogFileDefinitionViewModel : PropertyChangedBase
     {
         private string path;
 
