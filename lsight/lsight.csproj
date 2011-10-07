@@ -68,6 +68,7 @@
     <Compile Include="Commands\AddLogFileDefinitionCommand.cs" />
     <Compile Include="Commands\ChangeLogFileColorCommand.cs" />
     <Compile Include="Commands\RemoveLogFileDefinitionCommand.cs" />
+    <Compile Include="Converters\TimestampConverter.cs" />
     <Compile Include="Events\LogFileDefinitionAdded.cs" />
     <Compile Include="Events\LogFileDefinitionRemoved.cs" />
     <Compile Include="Logs\ILogs.cs" />
@@ -80,15 +81,23 @@
     </Compile>
     <Compile Include="Logs\LogsViewModel.cs" />
     <Compile Include="lsightBootstrapper.cs" />
+    <Compile Include="Model\TimestampedLine.cs" />
+    <Compile Include="Services\ITimestampingService.cs" />
+    <Compile Include="Services\TimestampingService.cs" />
     <Compile Include="Settings\ISettings.cs" />
     <Compile Include="Settings\LogFileDefinition\ExistingLogFileDefinitionView.xaml.cs">
       <DependentUpon>ExistingLogFileDefinitionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings\LogFileDefinition\ExistingLogFileDefinitionViewModel.cs" />
+    <Compile Include="Settings\LogFileDefinition\INewLogFileDefinition.cs" />
     <Compile Include="Settings\LogFileDefinition\NewLogFileDefinitionView.xaml.cs">
       <DependentUpon>NewLogFileDefinitionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings\LogFileDefinition\NewLogFileDefinitionViewModel.cs" />
+    <Compile Include="Settings\Preview\PreviewLogFileView.xaml.cs">
+      <DependentUpon>PreviewLogFileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\Preview\PreviewLogFileViewModel.cs" />
     <Compile Include="Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -137,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Settings\LogFileDefinition\NewLogFileDefinitionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings\Preview\PreviewLogFileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

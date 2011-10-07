@@ -7,16 +7,19 @@ namespace lsight.Settings.LogFileDefinition
     internal class ExistingLogFileDefinitionViewModel : PropertyChangedBase
     {
         private readonly IEventAggregator aggregator;
-        private string path;
+        private readonly bool initializing;
         private Color color;
-        private bool initializing;
+        private string path;
+        private string timestampRegex;
 
-        public ExistingLogFileDefinitionViewModel(string path, Color color, IEventAggregator aggregator)
+        public ExistingLogFileDefinitionViewModel(string path, Color color, string timestampRegex,
+                                                  IEventAggregator aggregator)
         {
             initializing = true;
             this.aggregator = aggregator;
             Path = path;
             Color = color;
+            TimestampRegex = timestampRegex;
             initializing = false;
         }
 
@@ -38,8 +41,18 @@ namespace lsight.Settings.LogFileDefinition
                 color = value;
                 NotifyOfPropertyChange(() => Color);
 
-                if(!initializing)
+                if (!initializing)
                     aggregator.Publish(new ChangeLogFileColorCommand(Path, Color));
+            }
+        }
+
+        public string TimestampRegex
+        {
+            get { return timestampRegex; }
+            set
+            {
+                timestampRegex = value;
+                NotifyOfPropertyChange(() => TimestampRegex);
             }
         }
 

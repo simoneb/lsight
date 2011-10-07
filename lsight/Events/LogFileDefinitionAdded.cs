@@ -2,7 +2,7 @@
 
 namespace lsight.Events
 {
-    internal class LogFileDefinitionAdded
+    public class LogFileDefinitionAdded
     {
         public string Path { get; set; }
         public Color Color { get; set; }

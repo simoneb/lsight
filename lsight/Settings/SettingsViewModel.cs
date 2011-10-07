@@ -12,9 +12,9 @@ namespace lsight.Settings
     internal class SettingsViewModel : Screen, ISettings, IHandle<AddLogFileDefinitionCommand>, IHandle<RemoveLogFileDefinitionCommand>
     {
         [ImportingConstructor]
-        public SettingsViewModel(IEventAggregator aggregator)
+        public SettingsViewModel(IEventAggregator aggregator, INewLogFileDefinition newLogFileDefinition)
         {
-            NewLogFileDefinition = new NewLogFileDefinitionViewModel(aggregator);
+            NewLogFileDefinition = newLogFileDefinition;
             LogDefinitions = new ObservableCollection<ExistingLogFileDefinitionViewModel>();
 
             this.aggregator = aggregator;
@@ -22,9 +22,9 @@ namespace lsight.Settings
             aggregator.Subscribe(this);
         }
 
-        private NewLogFileDefinitionViewModel newLogDefinition;
+        private INewLogFileDefinition newLogDefinition;
 
-        public NewLogFileDefinitionViewModel NewLogFileDefinition
+        public INewLogFileDefinition NewLogFileDefinition
         {
             get { return newLogDefinition; }
             set
@@ -49,7 +49,7 @@ namespace lsight.Settings
 
         public void Handle(AddLogFileDefinitionCommand message)
         {
-            LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(message.Path, message.Color, aggregator));
+            LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(message.Path, message.Color, message.TimestampRegex, aggregator));
             aggregator.Publish(new LogFileDefinitionAdded(message.Path, message.Color));
         }
 

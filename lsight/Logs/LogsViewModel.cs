@@ -12,7 +12,7 @@ namespace lsight.Logs
     [Export(typeof(ILogs))]
     class LogsViewModel : PropertyChangedBase, ILogs, IHandle<LogFileDefinitionAdded>, IHandle<LogFileDefinitionRemoved>, IHandle<ChangeLogFileColorCommand>
     {
-        private ObservableCollection<LogLineViewModel> lines;
+        private ObservableCollection<LogLineViewModel> lines = new ObservableCollection<LogLineViewModel>();
 
         [ImportingConstructor]
         public LogsViewModel(IEventAggregator aggregator)
@@ -22,8 +22,9 @@ namespace lsight.Logs
 
         public void Handle(LogFileDefinitionAdded message)
         {
-            Lines = new ObservableCollection<LogLineViewModel>(
-                    from line in File.ReadAllLines(message.Path) select new LogLineViewModel(line, message.Path, message.Color));
+            (from line in File.ReadAllLines(message.Path)
+             select new LogLineViewModel(line, message.Path, message.Color))
+             .Apply(Lines.Add);
         }
 
         public ObservableCollection<LogLineViewModel> Lines
