@@ -65,30 +65,30 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\AddLogFileDefinitionCommand.cs" />
+    <Compile Include="Commands\ChangeLogFileColorCommand.cs" />
+    <Compile Include="Commands\RemoveLogFileDefinitionCommand.cs" />
     <Compile Include="Events\LogFileDefinitionAdded.cs" />
     <Compile Include="Events\LogFileDefinitionRemoved.cs" />
     <Compile Include="Logs\ILogs.cs" />
+    <Compile Include="Logs\Lines\LogLineView.xaml.cs">
+      <DependentUpon>LogLineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Logs\Lines\LogLineViewModel.cs" />
     <Compile Include="Logs\LogsView.xaml.cs">
       <DependentUpon>LogsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logs\LogsViewModel.cs" />
     <Compile Include="lsightBootstrapper.cs" />
     <Compile Include="Settings\ISettings.cs" />
-    <Compile Include="Settings\LogFileDefinition\AddLogFileDefinitionCommand.cs" />
     <Compile Include="Settings\LogFileDefinition\ExistingLogFileDefinitionView.xaml.cs">
       <DependentUpon>ExistingLogFileDefinitionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings\LogFileDefinition\ExistingLogFileDefinitionViewModel.cs" />
-    <Compile Include="Settings\LogFileDefinition\ILogFileDefinition.cs" />
-    <Compile Include="Settings\LogFileDefinition\LogFileDefinitionView.xaml.cs">
-      <DependentUpon>LogFileDefinitionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Settings\LogFileDefinition\LogFileDefinitionViewModel.cs" />
     <Compile Include="Settings\LogFileDefinition\NewLogFileDefinitionView.xaml.cs">
       <DependentUpon>NewLogFileDefinitionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings\LogFileDefinition\NewLogFileDefinitionViewModel.cs" />
-    <Compile Include="Settings\LogFileDefinition\RemoveLogFileDefinitionCommand.cs" />
     <Compile Include="Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -124,15 +124,15 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Logs\Lines\LogLineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Logs\LogsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Settings\LogFileDefinition\ExistingLogFileDefinitionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Settings\LogFileDefinition\LogFileDefinitionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -149,9 +149,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,4 @@
-﻿namespace lsight.Settings.LogFileDefinition
+﻿namespace lsight.Commands
 {
     internal class RemoveLogFileDefinitionCommand
     {

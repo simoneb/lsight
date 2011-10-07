@@ -2,14 +2,17 @@
 using System.ComponentModel.Composition;
 using System.IO;
 using Caliburn.Micro;
+using lsight.Commands;
 using lsight.Events;
+using System.Linq;
+using lsight.Logs.Lines;
 
 namespace lsight.Logs
 {
     [Export(typeof(ILogs))]
-    class LogsViewModel : PropertyChangedBase, ILogs, IHandle<LogFileDefinitionAdded>, IHandle<LogFileDefinitionRemoved>
+    class LogsViewModel : PropertyChangedBase, ILogs, IHandle<LogFileDefinitionAdded>, IHandle<LogFileDefinitionRemoved>, IHandle<ChangeLogFileColorCommand>
     {
-        private ObservableCollection<string> lines;
+        private ObservableCollection<LogLineViewModel> lines;
 
         [ImportingConstructor]
         public LogsViewModel(IEventAggregator aggregator)
@@ -19,15 +22,15 @@ namespace lsight.Logs
 
         public void Handle(LogFileDefinitionAdded message)
         {
-            Lines = new ObservableCollection<string>(File.ReadAllLines(message.Path));
+            Lines = new ObservableCollection<LogLineViewModel>(
+                    from line in File.ReadAllLines(message.Path) select new LogLineViewModel(line, message.Path, message.Color));
         }
 
-        public ObservableCollection<string> Lines
+        public ObservableCollection<LogLineViewModel> Lines
         {
-            get {
-                return lines;
-            }
-            set {
+            get { return lines; }
+            set
+            {
                 lines = value;
                 NotifyOfPropertyChange(() => Lines);
             }
@@ -35,7 +38,15 @@ namespace lsight.Logs
 
         public void Handle(LogFileDefinitionRemoved message)
         {
-            Lines.Clear();
+            var linesToRemove = Lines.Where(line => line.Path.Equals(message.Path)).ToArray();
+
+            foreach (var line in linesToRemove)
+                Lines.Remove(line);
+        }
+
+        public void Handle(ChangeLogFileColorCommand message)
+        {
+            Lines.Where(l => l.Path.Equals(message.Path)).Apply(l => l.ChangeColor(message.Color));
         }
     }
 }

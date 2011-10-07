@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
 
-namespace lsight.Settings.LogFileDefinition
+namespace lsight.Commands
 {
     internal class AddLogFileDefinitionCommand
     {

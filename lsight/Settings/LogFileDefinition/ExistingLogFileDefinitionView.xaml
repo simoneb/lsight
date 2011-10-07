@@ -2,11 +2,16 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
-        <ContentControl x:Name="Definition"></ContentControl>
+        <Label Target="{Binding ElementName=Path}" >
+            Path:
+        </Label>
+        <TextBlock x:Name="Path" MinWidth="100"></TextBlock>
+        <Separator Width="15" Background="{x:Null}"></Separator>
+        <Controls:ColorPicker SelectedColor="{Binding Color}"></Controls:ColorPicker>
+        <Separator Width="15" Background="{x:Null}"></Separator>
         <Button x:Name="Remove">Remove</Button>
     </StackPanel>
 </UserControl>

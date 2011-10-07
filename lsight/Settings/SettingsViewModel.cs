@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
+using lsight.Commands;
 using lsight.Events;
 using lsight.Settings.LogFileDefinition;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace lsight.Settings
         public SettingsViewModel(IEventAggregator aggregator)
         {
             NewLogFileDefinition = new NewLogFileDefinitionViewModel(aggregator);
-            LogDefinitions = new ObservableCollection<ILogFileDefinition>();
+            LogDefinitions = new ObservableCollection<ExistingLogFileDefinitionViewModel>();
 
             this.aggregator = aggregator;
 
@@ -34,10 +34,10 @@ namespace lsight.Settings
             }
         }
 
-        private ObservableCollection<ILogFileDefinition> logDefinitions;
+        private ObservableCollection<ExistingLogFileDefinitionViewModel> logDefinitions;
         private readonly IEventAggregator aggregator;
 
-        public ObservableCollection<ILogFileDefinition> LogDefinitions
+        public ObservableCollection<ExistingLogFileDefinitionViewModel> LogDefinitions
         {
             get { return logDefinitions; }
             set

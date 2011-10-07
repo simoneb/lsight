@@ -8,6 +8,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
@@ -15,11 +16,9 @@
                 <MenuItem Header="_Exit" x:Name="Exit" />
             </MenuItem>
         </Menu>
-        <StackPanel Grid.Row="1">
-            <Expander IsExpanded="True" Header="Settings">
-                <ContentControl x:Name="Settings"></ContentControl>
-            </Expander>
-            <ContentControl x:Name="Logs" ></ContentControl>
-        </StackPanel>
+        <Expander IsExpanded="True" Header="Settings" Grid.Row="1">
+            <ContentControl x:Name="Settings"></ContentControl>
+        </Expander>
+        <ContentControl Grid.Row="2" x:Name="Logs"></ContentControl>
     </Grid>
 </UserControl>

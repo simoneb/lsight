@@ -1,39 +1,46 @@
 using System.Windows.Media;
 using Caliburn.Micro;
+using lsight.Commands;
 
 namespace lsight.Settings.LogFileDefinition
 {
-    class ExistingLogFileDefinitionViewModel : PropertyChangedBase, ILogFileDefinition
+    internal class ExistingLogFileDefinitionViewModel : PropertyChangedBase
     {
         private readonly IEventAggregator aggregator;
-        private ILogFileDefinition definition;
+        private string path;
+        private Color color;
+        private bool initializing;
 
         public ExistingLogFileDefinitionViewModel(string path, Color color, IEventAggregator aggregator)
         {
+            initializing = true;
             this.aggregator = aggregator;
-            Definition = new LogFileDefinitionViewModel {Color = color, Path = path};
-        }
-
-        public ILogFileDefinition Definition
-        {
-            get { return definition; }
-            set
-            {
-                definition = value;
-                NotifyOfPropertyChange(() => Definition);
-            }
+            Path = path;
+            Color = color;
+            initializing = false;
         }
 
         public string Path
         {
-            get { return definition.Path; }
-            set { definition.Path = value; }
+            get { return path; }
+            set
+            {
+                path = value;
+                NotifyOfPropertyChange(() => Path);
+            }
         }
 
         public Color Color
         {
-            get { return definition.Color; }
-            set { definition.Color = value; }
+            get { return color; }
+            set
+            {
+                color = value;
+                NotifyOfPropertyChange(() => Color);
+
+                if(!initializing)
+                    aggregator.Publish(new ChangeLogFileColorCommand(Path, Color));
+            }
         }
 
         public void Remove()

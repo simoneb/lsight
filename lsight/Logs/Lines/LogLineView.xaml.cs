@@ -12,14 +12,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace lsight.Settings.LogFileDefinition
+namespace lsight.Logs.Lines
 {
     /// <summary>
-    /// Interaction logic for LogFileDefinitionView.xaml
+    /// Interaction logic for LogLineView.xaml
     /// </summary>
-    public partial class LogFileDefinitionView : UserControl
+    public partial class LogLineView : UserControl
     {
-        public LogFileDefinitionView()
+        public LogLineView()
         {
             InitializeComponent();
         }
