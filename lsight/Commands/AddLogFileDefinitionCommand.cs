@@ -6,13 +6,13 @@ namespace lsight.Commands
     {
         public string Path { get; set; }
         public Color Color { get; set; }
-        public string TimestampRegex { get; set; }
+        public string TimestampPattern { get; set; }
 
-        public AddLogFileDefinitionCommand(string path, Color color, string timestampRegex)
+        public AddLogFileDefinitionCommand(string path, Color color, string timestampPattern)
         {
             Path = path;
             Color = color;
-            TimestampRegex = timestampRegex;
+            TimestampPattern = timestampPattern;
         }
     }
 }

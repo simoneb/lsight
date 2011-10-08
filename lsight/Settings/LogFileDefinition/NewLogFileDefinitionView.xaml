@@ -1,14 +1,27 @@
 ﻿<UserControl x:Class="lsight.Settings.LogFileDefinition.NewLogFileDefinitionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-             xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended">
+             xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:ca="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro">
     <StackPanel Orientation="Horizontal">
         <Label Target="{Binding ElementName=Path}" >Path:</Label>
         <TextBox x:Name="Path" MinWidth="200"></TextBox>
         <Button x:Name="Browse" Width="20">...</Button>
         <Separator Width="5" Background="{x:Null}"></Separator>
         <Label Target="{Binding ElementName=TimestampRegex}" >Timestamp regex:</Label>
-        <TextBox x:Name="TimestampRegex" MinWidth="80"></TextBox>
+        <ComboBox x:Name="TimestampPatterns" MinWidth="100" IsEditable="True">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="KeyUp">
+                    <ca:ActionMessage MethodName="EditTimestampPattern">
+                        <ca:Parameter Value="{Binding ElementName=TimestampPatterns,Path=Text}"></ca:Parameter>
+                    </ca:ActionMessage>
+                </i:EventTrigger>  
+                <i:EventTrigger EventName="SelectionChanged">
+                    <ca:ActionMessage MethodName="EditTimestampPattern">
+                        <ca:Parameter Value="{Binding ElementName=TimestampPatterns,Path=SelectedValue}"></ca:Parameter>
+                    </ca:ActionMessage>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ComboBox>
         <Separator Width="5" Background="{x:Null}"></Separator>
         <Button x:Name="Preview">Preview</Button>
         <Separator Width="5" Background="{x:Null}"></Separator>

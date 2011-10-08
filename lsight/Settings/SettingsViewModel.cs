@@ -49,7 +49,7 @@ namespace lsight.Settings
 
         public void Handle(AddLogFileDefinitionCommand message)
         {
-            LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(message.Path, message.Color, message.TimestampRegex, aggregator));
+            LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(message.Path, message.Color, message.TimestampPattern, aggregator));
             aggregator.Publish(new LogFileDefinitionAdded(message.Path, message.Color));
         }
 

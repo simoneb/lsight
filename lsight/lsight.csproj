@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -82,7 +83,9 @@
     <Compile Include="Logs\LogsViewModel.cs" />
     <Compile Include="lsightBootstrapper.cs" />
     <Compile Include="Model\TimestampedLine.cs" />
+    <Compile Include="Services\ISettingsStorage.cs" />
     <Compile Include="Services\ITimestampingService.cs" />
+    <Compile Include="Services\SettingsStorage.cs" />
     <Compile Include="Services\TimestampingService.cs" />
     <Compile Include="Settings\ISettings.cs" />
     <Compile Include="Settings\LogFileDefinition\ExistingLogFileDefinitionView.xaml.cs">
@@ -126,6 +129,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

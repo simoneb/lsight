@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using System.Windows.Media;
 using Caliburn.Micro;
 using lsight.Commands;
@@ -6,6 +7,7 @@ using lsight.Events;
 using lsight.Services;
 using lsight.Settings.Preview;
 using Microsoft.Win32;
+using System.Linq;
 
 namespace lsight.Settings.LogFileDefinition
 {
@@ -17,15 +19,23 @@ namespace lsight.Settings.LogFileDefinition
         private Color color;
 
         private string path;
-        private string timestampRegex;
-        private ITimestampingService timestampingService;
+        private string timestampPattern;
+        private readonly ITimestampingService timestampingService;
+        private readonly ISettingsStorage settingsStorage;
+        private ObservableCollection<string> timestampPatterns;
 
         [ImportingConstructor]
-        public NewLogFileDefinitionViewModel(IEventAggregator aggregator, IWindowManager windowManager, ITimestampingService timestampingService)
+        public NewLogFileDefinitionViewModel(IEventAggregator aggregator,
+                                             IWindowManager windowManager,
+                                             ITimestampingService timestampingService,
+                                             ISettingsStorage settingsStorage)
         {
             this.aggregator = aggregator;
             this.windowManager = windowManager;
             this.timestampingService = timestampingService;
+            this.settingsStorage = settingsStorage;
+
+            timestampPatterns = new ObservableCollection<string>(settingsStorage.RecentTimestampPatterns);
 
             aggregator.Subscribe(this);
         }
@@ -42,15 +52,30 @@ namespace lsight.Settings.LogFileDefinition
             }
         }
 
-        public string TimestampRegex
+        public string TimestampPattern
         {
-            get { return timestampRegex; }
+            get { return timestampPattern; }
             set
             {
-                timestampRegex = value;
-                NotifyOfPropertyChange(() => TimestampRegex);
+                timestampPattern = value;
+                NotifyOfPropertyChange(() => TimestampPattern);
                 NotifyOfPropertyChange(() => CanAdd);
                 NotifyOfPropertyChange(() => CanPreview);
+            }
+        }
+
+        public void EditTimestampPattern(string text)
+        {
+            TimestampPattern = text;
+        }
+
+        public ObservableCollection<string> TimestampPatterns
+        {
+            get { return timestampPatterns; }
+            set
+            {
+                timestampPatterns = value;
+                NotifyOfPropertyChange(() => TimestampPatterns);
             }
         }
 
@@ -67,17 +92,17 @@ namespace lsight.Settings.LogFileDefinition
 
         public bool CanAdd
         {
-            get { return !string.IsNullOrEmpty(Path) && !string.IsNullOrEmpty(TimestampRegex) && Color != new Color(); }
+            get { return !string.IsNullOrEmpty(Path) && !string.IsNullOrEmpty(TimestampPattern) && Color != new Color(); }
         }
 
         public bool CanPreview
         {
-            get { return !string.IsNullOrEmpty(Path) && !string.IsNullOrEmpty(TimestampRegex); }
+            get { return !string.IsNullOrEmpty(Path) && !string.IsNullOrEmpty(TimestampPattern); }
         }
 
         public void Preview()
         {
-            windowManager.ShowDialog(new PreviewLogFileViewModel(Path, TimestampRegex, timestampingService));
+            windowManager.ShowDialog(new PreviewLogFileViewModel(Path, TimestampPattern, timestampingService));
         }
 
         public void Browse()
@@ -95,7 +120,13 @@ namespace lsight.Settings.LogFileDefinition
 
         public void Add()
         {
-            aggregator.Publish(new AddLogFileDefinitionCommand(Path, Color, TimestampRegex));
+            aggregator.Publish(new AddLogFileDefinitionCommand(Path, Color, TimestampPattern));
+            
+            if(!TimestampPatterns.Contains(TimestampPattern))
+            {
+                TimestampPatterns.Add(TimestampPattern);
+                settingsStorage.SetRecentTimestampPatterns(TimestampPatterns);
+            }
         }
 
         public void Handle(LogFileDefinitionAdded message)

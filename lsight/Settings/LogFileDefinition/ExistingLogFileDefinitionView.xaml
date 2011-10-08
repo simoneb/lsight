@@ -7,7 +7,7 @@
         <TextBlock x:Name="Path" MinWidth="200" VerticalAlignment="Center"></TextBlock>
         <Separator Width="5" Background="{x:Null}"></Separator>
         <Label Target="{Binding ElementName=TimestampRegex}" >Timestamp regex:</Label>
-        <TextBlock x:Name="TimestampRegex" MinWidth="80"></TextBlock>
+        <TextBlock x:Name="TimestampPattern" MinWidth="80"></TextBlock>
         <Separator Width="5" Background="{x:Null}"></Separator>
         <Controls:ColorPicker SelectedColor="{Binding Color}"></Controls:ColorPicker>
         <Separator Width="15" Background="{x:Null}"></Separator>

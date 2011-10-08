@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Primitives;
 using System.Linq;
 using Caliburn.Micro;
+using lsight.Services;
 using lsight.Shell;
 
 namespace lsight
@@ -33,6 +34,11 @@ namespace lsight
 
             Application.MainWindow.Height = 300;
             Application.MainWindow.Width = 300;
+        }
+
+        protected override void OnExit(object sender, EventArgs e)
+        {
+            container.GetExportedValue<ISettingsStorage>().Persist();
         }
 
         protected override object GetInstance(Type serviceType, string key)
