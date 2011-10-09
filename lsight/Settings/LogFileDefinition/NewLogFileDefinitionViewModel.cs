@@ -69,6 +69,12 @@ namespace lsight.Settings.LogFileDefinition
             TimestampPattern = text;
         }
 
+        public void RemoveTimestampPattern(string pattern)
+        {
+            TimestampPatterns.Remove(pattern);
+            settingsStorage.SetRecentTimestampPatterns(TimestampPatterns);
+        }
+
         public ObservableCollection<string> TimestampPatterns
         {
             get { return timestampPatterns; }
@@ -121,7 +127,12 @@ namespace lsight.Settings.LogFileDefinition
         public void Add()
         {
             aggregator.Publish(new AddLogFileDefinitionCommand(Path, Color, TimestampPattern));
-            
+
+            RememberTimestampPattern();
+        }
+
+        private void RememberTimestampPattern()
+        {
             if(!TimestampPatterns.Contains(TimestampPattern))
             {
                 TimestampPatterns.Add(TimestampPattern);
