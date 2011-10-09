@@ -108,7 +108,7 @@ namespace lsight.Settings.LogFileDefinition
 
         public void Preview()
         {
-            windowManager.ShowDialog(new PreviewLogFileViewModel(Path, TimestampPattern, timestampingService));
+            windowManager.ShowPopup(new PreviewLogFileViewModel(Path, TimestampPattern, timestampingService));
         }
 
         public void Browse()

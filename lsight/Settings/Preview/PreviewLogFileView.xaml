@@ -5,15 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <ListBox x:Name="Lines">
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Timestamp, Converter={StaticResource TimestampConverter}}" FontWeight="Bold"></TextBlock>
-                    <Separator Width="10" Background="{x:Null}"></Separator>
-                    <TextBlock Text="{Binding Line}" ></TextBlock>
-                </StackPanel>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
+    <Border CornerRadius="6"
+	        BorderBrush="Black"
+	        BorderThickness="1"
+	        Background="White"
+	        Padding="4"
+	        Margin="6">
+        <Border.Effect>
+            <DropShadowEffect Opacity=".5" />
+        </Border.Effect>
+        <Grid>
+        <ListBox Canvas.Left="0" Canvas.Top="0" x:Name="Lines" BorderThickness="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Timestamp, Converter={StaticResource TimestampConverter}}" FontWeight="Bold"></TextBlock>
+                        <Separator Width="10" Background="{x:Null}"></Separator>
+                        <TextBlock Text="{Binding Line}" ></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+            <Button x:Name="TryClose" HorizontalAlignment="Right" VerticalAlignment="Top">Close</Button>
+        </Grid>
+    </Border>
 </UserControl>
