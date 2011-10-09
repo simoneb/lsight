@@ -50,7 +50,7 @@ namespace lsight.Settings
         public void Handle(AddLogFileDefinitionCommand message)
         {
             LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(message.Path, message.Color, message.TimestampPattern, aggregator));
-            aggregator.Publish(new LogFileDefinitionAdded(message.Path, message.Color));
+            aggregator.Publish(new LogFileDefinitionAdded(message.Path, message.Color, message.TimestampPattern));
         }
 
         public void Handle(RemoveLogFileDefinitionCommand message)

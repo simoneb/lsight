@@ -19,6 +19,7 @@ namespace lsight.Logs.Lines
         }
 
         public string Path { get; set; }
+        public DateTime Timestamp { get; set; }
 
         private SolidColorBrush brush;
 
@@ -32,10 +33,11 @@ namespace lsight.Logs.Lines
             }
         }
 
-        public LogLineViewModel(string contents, string path, Color color)
+        public LogLineViewModel(string contents, string path, Color color, DateTime timestamp)
         {
             Contents = contents;
             Path = path;
+            Timestamp = timestamp;
             Brush = new SolidColorBrush(color);
         }
 
