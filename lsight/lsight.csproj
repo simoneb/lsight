@@ -72,6 +72,7 @@
     <Compile Include="Converters\TimestampConverter.cs" />
     <Compile Include="Events\LogFileDefinitionAdded.cs" />
     <Compile Include="Events\LogFileDefinitionRemoved.cs" />
+    <Compile Include="EyeCandy.cs" />
     <Compile Include="Logs\ILogs.cs" />
     <Compile Include="Logs\Lines\LogLineView.xaml.cs">
       <DependentUpon>LogLineView.xaml</DependentUpon>
@@ -166,7 +167,9 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Settings\Preview\close-button.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

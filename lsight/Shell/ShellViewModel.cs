@@ -7,7 +7,7 @@ using lsight.Settings;
 namespace lsight.Shell
 {
     [Export(typeof(IShell))]
-    class ShellViewModel : Conductor<object>.Collection.AllActive, IShell
+    class ShellViewModel : IShell, IHaveDisplayName
     {
         [Import]
         public ILogs Logs { get; set; }
@@ -18,6 +18,17 @@ namespace lsight.Shell
         public void Exit()
         {
             Application.Current.Shutdown();
+        }
+
+        public string DisplayName
+        {
+            get
+            {
+                return "lSight";
+            }
+            set
+            {
+            }
         }
     }
 }

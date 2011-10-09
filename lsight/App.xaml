@@ -1,7 +1,4 @@
-﻿<Application x:Class="lsight.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-             xmlns:lsight="clr-namespace:lsight" xmlns:Converters="clr-namespace:lsight.Converters">
+﻿<Application x:Class="lsight.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:lsight="clr-namespace:lsight" xmlns:Converters="clr-namespace:lsight.Converters">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -9,7 +6,16 @@
                     <lsight:lsightBootstrapper x:Key="bootstrapper" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-        	<Converters:TimestampConverter x:Key="TimestampConverter" />
+            <Converters:TimestampConverter x:Key="TimestampConverter" />
+            <Style x:Key="ImageButton" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Image Source="{Binding Path=(lsight:EyeCandy.Image), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

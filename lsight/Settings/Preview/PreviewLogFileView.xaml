@@ -2,31 +2,33 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Border CornerRadius="6"
-	        BorderBrush="Black"
-	        BorderThickness="1"
-	        Background="White"
-	        Padding="4"
-	        Margin="6">
-        <Border.Effect>
-            <DropShadowEffect Opacity=".5" />
-        </Border.Effect>
-        <Grid>
-        <ListBox Canvas.Left="0" Canvas.Top="0" x:Name="Lines" BorderThickness="0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Timestamp, Converter={StaticResource TimestampConverter}}" FontWeight="Bold"></TextBlock>
-                        <Separator Width="10" Background="{x:Null}"></Separator>
-                        <TextBlock Text="{Binding Line}" ></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-            <Button x:Name="TryClose" HorizontalAlignment="Right" VerticalAlignment="Top">Close</Button>
-        </Grid>
-    </Border>
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:lsight="clr-namespace:lsight" mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" MaxWidth="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="TryClose" Grid.Row="0" Grid.Column="1" lsight:EyeCandy.Image="close-button.png" Style="{StaticResource ImageButton}" />
+        <Border Grid.Row="1" Grid.Column="0" CornerRadius="6" BorderBrush="Black" BorderThickness="1" Background="White" Padding="4" Margin="6,-5,-5,6">
+            <Border.Effect>
+                <DropShadowEffect Opacity=".5" />
+            </Border.Effect>
+            <ListBox Canvas.Left="0" Canvas.Top="0" x:Name="Lines" BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Timestamp, Converter={StaticResource TimestampConverter}}" FontWeight="Bold"></TextBlock>
+                            <Separator Width="10" Background="{x:Null}"></Separator>
+                            <TextBlock Text="{Binding Line}" ></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+    </Grid>
 </UserControl>
