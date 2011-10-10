@@ -56,8 +56,8 @@ namespace lsight.Settings
                 return;
             }
 
-            LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(message.Path, message.Color, message.TimestampPattern, aggregator));
-            aggregator.Publish(new LogFileDefinitionAdded(message.Path, message.Color, message.TimestampPattern));
+            LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(message.Path, message.Color, message.TimestampPattern, message.HourOffset, aggregator));
+            aggregator.Publish(new LogFileDefinitionAdded(message.Path, message.Color, message.TimestampPattern, message.HourOffset));
         }
 
         public void Handle(RemoveLogFileDefinitionCommand message)

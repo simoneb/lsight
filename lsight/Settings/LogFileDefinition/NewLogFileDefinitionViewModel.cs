@@ -7,21 +7,22 @@ using lsight.Events;
 using lsight.Services;
 using lsight.Settings.Preview;
 using Microsoft.Win32;
-using System.Linq;
 
 namespace lsight.Settings.LogFileDefinition
 {
-    [Export(typeof(INewLogFileDefinition))]
-    public class NewLogFileDefinitionViewModel : PropertyChangedBase, IHandle<LogFileDefinitionAdded>, INewLogFileDefinition
+    [Export(typeof (INewLogFileDefinition))]
+    public class NewLogFileDefinitionViewModel : PropertyChangedBase, IHandle<LogFileDefinitionAdded>,
+                                                 INewLogFileDefinition
     {
         private readonly IEventAggregator aggregator;
+        private readonly ISettingsStorage settingsStorage;
+        private readonly ITimestampingService timestampingService;
         private readonly IWindowManager windowManager;
         private Color color;
+        private int hourOffset;
 
         private string path;
         private string timestampPattern;
-        private readonly ITimestampingService timestampingService;
-        private readonly ISettingsStorage settingsStorage;
         private ObservableCollection<string> timestampPatterns;
 
         [ImportingConstructor]
@@ -64,17 +65,6 @@ namespace lsight.Settings.LogFileDefinition
             }
         }
 
-        public void EditTimestampPattern(string text)
-        {
-            TimestampPattern = text;
-        }
-
-        public void RemoveTimestampPattern(string pattern)
-        {
-            TimestampPatterns.Remove(pattern);
-            settingsStorage.SetRecentTimestampPatterns(TimestampPatterns);
-        }
-
         public ObservableCollection<string> TimestampPatterns
         {
             get { return timestampPatterns; }
@@ -82,6 +72,16 @@ namespace lsight.Settings.LogFileDefinition
             {
                 timestampPatterns = value;
                 NotifyOfPropertyChange(() => TimestampPatterns);
+            }
+        }
+
+        public int HourOffset
+        {
+            get { return hourOffset; }
+            set
+            {
+                hourOffset = value;
+                NotifyOfPropertyChange(() => HourOffset);
             }
         }
 
@@ -106,6 +106,28 @@ namespace lsight.Settings.LogFileDefinition
             get { return !string.IsNullOrEmpty(Path) && !string.IsNullOrEmpty(TimestampPattern); }
         }
 
+        #region IHandle<LogFileDefinitionAdded> Members
+
+        public void Handle(LogFileDefinitionAdded message)
+        {
+            Path = string.Empty;
+            Color = new Color();
+            HourOffset = 0;
+        }
+
+        #endregion
+
+        public void EditTimestampPattern(string text)
+        {
+            TimestampPattern = text;
+        }
+
+        public void RemoveTimestampPattern(string pattern)
+        {
+            TimestampPatterns.Remove(pattern);
+            settingsStorage.SetRecentTimestampPatterns(TimestampPatterns);
+        }
+
         public void Preview()
         {
             windowManager.ShowPopup(new PreviewLogFileViewModel(Path, TimestampPattern, timestampingService));
@@ -114,11 +136,11 @@ namespace lsight.Settings.LogFileDefinition
         public void Browse()
         {
             var dialog = new OpenFileDialog
-                         {
-                             CheckFileExists = true,
-                             CheckPathExists = true,
-                             Multiselect = false
-                         };
+            {
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Multiselect = false
+            };
 
             if (dialog.ShowDialog() == true)
                 Path = dialog.FileName;
@@ -126,24 +148,18 @@ namespace lsight.Settings.LogFileDefinition
 
         public void Add()
         {
-            aggregator.Publish(new AddLogFileDefinitionCommand(Path, Color, TimestampPattern));
+            aggregator.Publish(new AddLogFileDefinitionCommand(Path, Color, TimestampPattern, HourOffset));
 
             RememberTimestampPattern();
         }
 
         private void RememberTimestampPattern()
         {
-            if(!TimestampPatterns.Contains(TimestampPattern))
+            if (!TimestampPatterns.Contains(TimestampPattern))
             {
                 TimestampPatterns.Add(TimestampPattern);
                 settingsStorage.SetRecentTimestampPatterns(TimestampPatterns);
             }
-        }
-
-        public void Handle(LogFileDefinitionAdded message)
-        {
-            Path = string.Empty;
-            Color = new Color();
         }
     }
 }

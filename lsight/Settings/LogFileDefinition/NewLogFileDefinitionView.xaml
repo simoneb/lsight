@@ -1,8 +1,8 @@
 ﻿<UserControl x:Name="Root" 
              x:Class="lsight.Settings.LogFileDefinition.NewLogFileDefinitionView" 
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns="http://schemas.microsoft.com/netfx/2009/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
              xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" 
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:ca="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro">
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:ca="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" xmlns:System="clr-namespace:System;assembly=mscorlib">
     <StackPanel Orientation="Horizontal">
         <Label Target="{Binding ElementName=Path}" >Path:</Label>
         <TextBox x:Name="Path" MinWidth="200"></TextBox>
@@ -36,6 +36,9 @@
         </ComboBox>
         <Separator Width="5" Background="{x:Null}"></Separator>
         <Button x:Name="Preview">Preview</Button>
+        <Separator Width="5" Background="{x:Null}"></Separator>
+        <Label Target="{Binding ElementName=HourOffset}">Hour offset:</Label>
+        <Controls:IntegerUpDown Value="{Binding HourOffset}"></Controls:IntegerUpDown>
         <Separator Width="5" Background="{x:Null}"></Separator>
         <Controls:ColorPicker Width="50" SelectedColor="{Binding Color}"></Controls:ColorPicker>
         <Separator Width="15" Background="{x:Null}"></Separator>

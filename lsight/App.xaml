@@ -5,18 +5,10 @@
                 <ResourceDictionary>
                     <lsight:lsightBootstrapper x:Key="bootstrapper" />
                 </ResourceDictionary>
+                <ResourceDictionary Source="Styles.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
             <Converters:TimestampConverter x:Key="TimestampConverter" />
-            <Style x:Key="ImageButton" TargetType="{x:Type Button}">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <Image Source="{Binding Path=(lsight:EyeCandy.Image), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <ImageSource x:Key="CloseButton">Resources\close-button.png</ImageSource>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

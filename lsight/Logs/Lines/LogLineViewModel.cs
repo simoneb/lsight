@@ -6,7 +6,18 @@ namespace lsight.Logs.Lines
 {
     internal class LogLineViewModel : PropertyChangedBase
     {
+        private SolidColorBrush brush;
         private string contents;
+        private int hourOffset;
+
+        public LogLineViewModel(string contents, string path, Color color, DateTime timestamp, int hourOffset)
+        {
+            Contents = contents;
+            Path = path;
+            Timestamp = timestamp;
+            HourOffset = hourOffset;
+            Brush = new SolidColorBrush(color);
+        }
 
         public string Contents
         {
@@ -21,7 +32,15 @@ namespace lsight.Logs.Lines
         public string Path { get; set; }
         public DateTime Timestamp { get; set; }
 
-        private SolidColorBrush brush;
+        public int HourOffset
+        {
+            get { return hourOffset; }
+            set
+            {
+                hourOffset = value;
+                NotifyOfPropertyChange(() => HourOffset);
+            }
+        }
 
         public SolidColorBrush Brush
         {
@@ -33,17 +52,16 @@ namespace lsight.Logs.Lines
             }
         }
 
-        public LogLineViewModel(string contents, string path, Color color, DateTime timestamp)
-        {
-            Contents = contents;
-            Path = path;
-            Timestamp = timestamp;
-            Brush = new SolidColorBrush(color);
-        }
+        public DateTime TimestampIncludingOffset { get { return Timestamp.AddHours(HourOffset); } }
 
         public void ChangeColor(Color color)
         {
             Brush = new SolidColorBrush(color);
+        }
+
+        public void ChangeHourOffset(int hourOffset)
+        {
+            HourOffset = hourOffset;
         }
     }
 }

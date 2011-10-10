@@ -9,10 +9,11 @@ namespace lsight.Settings.LogFileDefinition
         private readonly IEventAggregator aggregator;
         private readonly bool initializing;
         private Color color;
+        private int hourOffset;
         private string path;
         private string timestampPattern;
 
-        public ExistingLogFileDefinitionViewModel(string path, Color color, string timestampPattern,
+        public ExistingLogFileDefinitionViewModel(string path, Color color, string timestampPattern, int hourOffset,
                                                   IEventAggregator aggregator)
         {
             initializing = true;
@@ -20,6 +21,7 @@ namespace lsight.Settings.LogFileDefinition
             Path = path;
             Color = color;
             TimestampPattern = timestampPattern;
+            HourOffset = hourOffset;
             initializing = false;
         }
 
@@ -53,6 +55,16 @@ namespace lsight.Settings.LogFileDefinition
             {
                 timestampPattern = value;
                 NotifyOfPropertyChange(() => TimestampPattern);
+            }
+        }
+
+        public int HourOffset
+        {
+            get { return hourOffset; }
+            set
+            {
+                hourOffset = value;
+                NotifyOfPropertyChange(() => HourOffset);
             }
         }
 

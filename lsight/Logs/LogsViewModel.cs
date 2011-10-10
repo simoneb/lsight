@@ -30,7 +30,7 @@ namespace lsight.Logs
             
             foreach (var timestampedLine in timestampingService.Timestamp(File.ReadLines(message.Path), message.TimestampPattern).OrderBy(l => l.Timestamp))
             {
-                var newLine = new LogLineViewModel(timestampedLine.Line, message.Path, message.Color, timestampedLine.Timestamp);
+                var newLine = new LogLineViewModel(timestampedLine.Line, message.Path, message.Color, timestampedLine.Timestamp, message.HourOffset);
 
                 if(appendToBottom)
                 {
@@ -38,9 +38,8 @@ namespace lsight.Logs
                     continue;
                 }
 
-                if (Lines.Any())
-                    while (Lines[i].Timestamp < timestampedLine.Timestamp)
-                        i++;
+                while (Lines.Count > i && Lines[i].TimestampIncludingOffset < newLine.TimestampIncludingOffset)
+                    i++;
 
                 if (Lines.Count > i)
                     Lines.Insert(i++, newLine);
