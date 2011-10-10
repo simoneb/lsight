@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button x:Name="TryClose" Grid.Row="0" Grid.Column="1" lsight:EyeCandy.Image="close-button.png" Style="{StaticResource ImageButton}" />
+        <Button x:Name="TryClose" Grid.Row="0" Grid.Column="1" lsight:EyeCandy.Image="{StaticResource CloseButton}" Style="{StaticResource ImageButton}" />
         <Border Grid.Row="1" Grid.Column="0" CornerRadius="6" BorderBrush="Black" BorderThickness="1" Background="White" Padding="4" Margin="6,-5,-5,6">
             <Border.Effect>
                 <DropShadowEffect Opacity=".5" />

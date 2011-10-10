@@ -71,6 +71,7 @@
     <Compile Include="Commands\RemoveLogFileDefinitionCommand.cs" />
     <Compile Include="Converters\TimestampConverter.cs" />
     <Compile Include="Events\LogFileDefinitionAdded.cs" />
+    <Compile Include="Events\LogFileDefinitionAlreadyExists.cs" />
     <Compile Include="Events\LogFileDefinitionRemoved.cs" />
     <Compile Include="EyeCandy.cs" />
     <Compile Include="Logs\ILogs.cs" />
@@ -84,6 +85,10 @@
     <Compile Include="Logs\LogsViewModel.cs" />
     <Compile Include="lsightBootstrapper.cs" />
     <Compile Include="Model\TimestampedLine.cs" />
+    <Compile Include="Notification\NotificationView.xaml.cs">
+      <DependentUpon>NotificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Notification\NotificationViewModel.cs" />
     <Compile Include="Services\ISettingsStorage.cs" />
     <Compile Include="Services\ITimestampingService.cs" />
     <Compile Include="Services\SettingsStorage.cs" />
@@ -146,6 +151,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Notification\NotificationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Settings\LogFileDefinition\ExistingLogFileDefinitionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -168,7 +177,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Settings\Preview\close-button.png" />
+    <Resource Include="Resources\close-button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

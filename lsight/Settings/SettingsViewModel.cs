@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using lsight.Commands;
@@ -49,6 +50,12 @@ namespace lsight.Settings
 
         public void Handle(AddLogFileDefinitionCommand message)
         {
+            if(LogDefinitions.Any(d => d.Path.Equals(message.Path, StringComparison.OrdinalIgnoreCase)))
+            {
+                aggregator.Publish(new LogFileDefinitionAlreadyExists(message.Path));
+                return;
+            }
+
             LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(message.Path, message.Color, message.TimestampPattern, aggregator));
             aggregator.Publish(new LogFileDefinitionAdded(message.Path, message.Color, message.TimestampPattern));
         }

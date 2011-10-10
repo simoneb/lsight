@@ -16,6 +16,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <ImageSource x:Key="CloseButton">Resources\close-button.png</ImageSource>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
