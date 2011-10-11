@@ -4,7 +4,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Image Source="{Binding Path=(lsight:EyeCandy.Image), RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
+                    <Image Source="{TemplateBinding Property=lsight:EyeCandy.Image}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
