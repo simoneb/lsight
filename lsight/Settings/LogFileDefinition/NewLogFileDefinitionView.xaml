@@ -1,47 +1,56 @@
 ﻿<UserControl x:Name="Root" 
              x:Class="lsight.Settings.LogFileDefinition.NewLogFileDefinitionView" 
-             xmlns="http://schemas.microsoft.com/netfx/2009/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns="http://schemas.microsoft.com/netfx/2009/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
              xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" 
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:ca="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" xmlns:System="clr-namespace:System;assembly=mscorlib">
-    <StackPanel Orientation="Horizontal">
-        <Label Target="{Binding ElementName=Path}" >Path:</Label>
-        <TextBox x:Name="Path" MinWidth="200"></TextBox>
-        <Button x:Name="Browse" Width="20">...</Button>
-        <Separator Width="5" Background="{x:Null}"></Separator>
-        <Label Target="{Binding ElementName=TimestampPatterns}" >Timestamp pattern:</Label>
-        <ComboBox x:Name="TimestampPatterns" MinWidth="100" IsEditable="True">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="KeyUp">
-                    <ca:ActionMessage MethodName="EditTimestampPattern">
-                        <ca:Parameter Value="{Binding ElementName=TimestampPatterns,Path=Text}"></ca:Parameter>
-                    </ca:ActionMessage>
-                </i:EventTrigger>  
-                <i:EventTrigger EventName="SelectionChanged">
-                    <ca:ActionMessage MethodName="EditTimestampPattern">
-                        <ca:Parameter Value="{Binding ElementName=TimestampPatterns,Path=SelectedValue}"></ca:Parameter>
-                    </ca:ActionMessage>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        	<ComboBox.ItemTemplate>
-        		<DataTemplate>
-        			<StackPanel Orientation="Horizontal">
-        				<TextBlock Text="{Binding}"></TextBlock>
-                        <!-- workaround for limitation in CaliburnMicro http://caliburnmicro.codeplex.com/discussions/229319 -->                        
-                        <Button Content="X" 
-                                ca:Message.Attach="RemoveTimestampPattern($dataContext)" 
-                                ca:Action.TargetWithoutContext="{Binding ElementName=Root, Path=DataContext}" />
-        			</StackPanel>
-        		</DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Separator Width="5" Background="{x:Null}"></Separator>
-        <Button x:Name="Preview">Preview</Button>
-        <Separator Width="5" Background="{x:Null}"></Separator>
-        <Label Target="{Binding ElementName=HourOffset}">Hour offset:</Label>
-        <Controls:IntegerUpDown Value="{Binding HourOffset}"></Controls:IntegerUpDown>
-        <Separator Width="5" Background="{x:Null}"></Separator>
-        <Controls:ColorPicker Width="50" SelectedColor="{Binding Color}"></Controls:ColorPicker>
-        <Separator Width="15" Background="{x:Null}"></Separator>
-        <Button x:Name="Add">Add</Button>
-    </StackPanel>
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+             xmlns:ca="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+			<ColumnDefinition Width="Auto" ></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<Label Grid.Column="0" Target="{Binding ElementName=Path}" >Path:</Label>
+		<TextBox Grid.Column="1" x:Name="Path" MinWidth="200"></TextBox>
+		<Button Grid.Column="2"  x:Name="Browse" Width="20">...</Button>
+		<Label Margin="5, 0, 0, 0" Grid.Column="3" Target="{Binding ElementName=TimestampPatterns}" >Timestamp pattern:</Label>
+		<ComboBox Grid.Column="4" x:Name="TimestampPatterns" MinWidth="100" IsEditable="True">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="KeyUp">
+					<ca:ActionMessage MethodName="EditTimestampPattern">
+						<ca:Parameter Value="{Binding ElementName=TimestampPatterns,Path=Text}"></ca:Parameter>
+					</ca:ActionMessage>
+				</i:EventTrigger>
+				<i:EventTrigger EventName="SelectionChanged">
+					<ca:ActionMessage MethodName="EditTimestampPattern">
+						<ca:Parameter Value="{Binding ElementName=TimestampPatterns,Path=SelectedValue}"></ca:Parameter>
+					</ca:ActionMessage>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding}"></TextBlock>
+						<!-- workaround for limitation in CaliburnMicro http://caliburnmicro.codeplex.com/discussions/229319 -->
+						<Button Content="X" 
+						        ca:Message.Attach="RemoveTimestampPattern($dataContext)" 
+						        ca:Action.TargetWithoutContext="{Binding ElementName=Root, Path=DataContext}" />
+					</StackPanel>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+		<Button Grid.Column="5" x:Name="Preview">Preview</Button>
+        <Label Margin="5, 0, 0, 0" Grid.Column="6" Target="{Binding ElementName=HourOffset}">Hour offset:</Label>
+		<Controls:IntegerUpDown Grid.Column="7" Value="{Binding HourOffset}"></Controls:IntegerUpDown>
+        <Controls:ColorPicker Margin="5, 0, 0, 0" Grid.Column="8" Width="50" SelectedColor="{Binding Color}"></Controls:ColorPicker>
+        <Button Margin="5, 0, 0, 0" Grid.Column="9" x:Name="Add">Add</Button>
+	</Grid>
 </UserControl>
