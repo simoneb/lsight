@@ -2,8 +2,20 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Micro="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro" xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <ListBox SelectionMode="Extended" x:Name="Lines"></ListBox>
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="lines" Source="{Binding Lines}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="TimestampIncludingOffset"></ComponentModel:SortDescription>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
+    <ListBox SelectionMode="Extended" ItemsSource="{Binding Source={StaticResource lines}}">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <ContentControl Micro:View.Model="{Binding}"></ContentControl>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
 </UserControl>

@@ -25,9 +25,14 @@ namespace lsight.Logs
 
         public void Handle(LogFileDefinitionAdded message)
         {
+            foreach (var line in timestampingService.Timestamp(File.ReadLines(message.Path), message.TimestampPattern))
+                Lines.Add(new LogLineViewModel(line.Line, message.Path, message.Color, line.Timestamp, message.HourOffset));
+            
+            return;
+
             var i = 0;
             var appendToBottom = false;
-            
+
             foreach (var timestampedLine in timestampingService.Timestamp(File.ReadLines(message.Path), message.TimestampPattern).OrderBy(l => l.Timestamp))
             {
                 var newLine = new LogLineViewModel(timestampedLine.Line, message.Path, message.Color, timestampedLine.Timestamp, message.HourOffset);
