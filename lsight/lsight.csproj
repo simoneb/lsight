@@ -79,6 +79,7 @@
       <DependentUpon>LogLineView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logs\Lines\LogLineViewModel.cs" />
+    <Compile Include="Logs\LogLineViewModelComparer.cs" />
     <Compile Include="Logs\LogsView.xaml.cs">
       <DependentUpon>LogsView.xaml</DependentUpon>
     </Compile>
