@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Windows.Data;
@@ -24,6 +25,7 @@ namespace lsight.Logs
         {
             this.timestampingService = timestampingService;
             aggregator.Subscribe(this);
+
             viewSource.Source = source;
             Lines = (ListCollectionView)viewSource.View;
             Lines.CustomSort = new LogLineViewModelComparer();
@@ -59,6 +61,11 @@ namespace lsight.Logs
         {
             using (viewSource.DeferRefresh())
                 source.Where(l => l.Path.Equals(message.Path)).Apply(l => l.ChangeColor(message.Color));
+        }
+
+        public void Export(string fileName)
+        {
+            File.WriteAllLines(fileName, Lines.Cast<LogLineViewModel>().Select(l => l.Contents));
         }
     }
 }

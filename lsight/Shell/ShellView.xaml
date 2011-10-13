@@ -13,6 +13,7 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <MenuItem Header="_File" >
+                <MenuItem Header="_Export" x:Name="Export" />
                 <MenuItem Header="_Exit" x:Name="Exit" />
             </MenuItem>
         </Menu>

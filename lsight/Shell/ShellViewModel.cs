@@ -6,6 +6,7 @@ using lsight.Events;
 using lsight.Logs;
 using lsight.Notification;
 using lsight.Settings;
+using Microsoft.Win32;
 
 namespace lsight.Shell
 {
@@ -30,6 +31,14 @@ namespace lsight.Shell
         [Import]
         public ISettings Settings { get; set; }
         
+        public void Export()
+        {
+            var d = new SaveFileDialog() { DefaultExt = ".txt", AddExtension = true, Filter = "Text Files (*.txt)|*.txt|Xml files (*.xml)|*.xml|All Files (*.*)|*.*" };
+            
+            if (d.ShowDialog() == true)
+                Logs.Export(d.FileName);
+        }
+
         public void Exit()
         {
             Application.Current.Shutdown();
@@ -41,9 +50,7 @@ namespace lsight.Shell
             {
                 return "lSight";
             }
-            set
-            {
-            }
+            set {}
         }
 
         public void Handle(LogFileDefinitionAlreadyExists message)
