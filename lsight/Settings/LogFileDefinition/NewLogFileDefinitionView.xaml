@@ -39,7 +39,7 @@
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="{Binding}"></TextBlock>
-						<!-- workaround for limitation in CaliburnMicro http://caliburnmicro.codeplex.com/discussions/229319 -->
+						<!-- workaround for limitation in Caliburn Micro http://caliburnmicro.codeplex.com/discussions/229319 -->
 						<Button Content="X" 
 						        ca:Message.Attach="RemoveTimestampPattern($dataContext)" 
 						        ca:Action.TargetWithoutContext="{Binding ElementName=Root, Path=DataContext}" />
@@ -48,8 +48,8 @@
 			</ComboBox.ItemTemplate>
 		</ComboBox>
 		<Button Grid.Column="5" Margin="5, 0, 0, 0" x:Name="Preview">Preview</Button>
-        <Label Margin="5, 0, 0, 0" Grid.Column="6" Target="{Binding ElementName=HourOffset}">Hour offset:</Label>
-		<Controls:IntegerUpDown Grid.Column="7" Value="{Binding HourOffset}"></Controls:IntegerUpDown>
+        <Label Margin="5, 0, 0, 0" Grid.Column="6" Target="{Binding ElementName=Offset}">Offset:</Label>
+		<Controls:MaskedTextBox Grid.Column="7" Text="{Binding Offset, Converter={StaticResource OffsetConverter}}" x:Name="Offset" Mask="# 00:00:00.000" ></Controls:MaskedTextBox>
         <Controls:ColorPicker Margin="5, 0, 0, 0" Grid.Column="8" Width="50" SelectedColor="{Binding Color}"></Controls:ColorPicker>
         <Button Margin="5, 0, 0, 0" Grid.Column="9" x:Name="Add">Add</Button>
 	</Grid>

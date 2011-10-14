@@ -69,6 +69,7 @@
     <Compile Include="Commands\AddLogFileDefinitionCommand.cs" />
     <Compile Include="Commands\ChangeLogFileColorCommand.cs" />
     <Compile Include="Commands\RemoveLogFileDefinitionCommand.cs" />
+    <Compile Include="Converters\OffsetConverter.cs" />
     <Compile Include="Converters\TimestampConverter.cs" />
     <Compile Include="Events\LogFileDefinitionAdded.cs" />
     <Compile Include="Events\LogFileDefinitionAlreadyExists.cs" />
@@ -85,6 +86,8 @@
     </Compile>
     <Compile Include="Logs\LogsViewModel.cs" />
     <Compile Include="lsightBootstrapper.cs" />
+    <Compile Include="Model\LogFile.cs" />
+    <Compile Include="Model\LogOffset.cs" />
     <Compile Include="Model\TimestampedLine.cs" />
     <Compile Include="Notification\NotificationView.xaml.cs">
       <DependentUpon>NotificationView.xaml</DependentUpon>

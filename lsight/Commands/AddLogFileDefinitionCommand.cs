@@ -1,20 +1,21 @@
 ﻿using System.Windows.Media;
+using lsight.Model;
 
 namespace lsight.Commands
 {
     internal class AddLogFileDefinitionCommand
     {
-        public string Path { get; set; }
-        public Color Color { get; set; }
-        public string TimestampPattern { get; set; }
-        public int HourOffset { get; set; }
+        public string Path { get; private set; }
+        public Color Color { get; private set; }
+        public string TimestampPattern { get; private set; }
+        public LogOffset Offset { get; private set; }
 
-        public AddLogFileDefinitionCommand(string path, Color color, string timestampPattern, int hourOffset)
+        public AddLogFileDefinitionCommand(string path, Color color, string timestampPattern, LogOffset offset)
         {
             Path = path;
             Color = color;
             TimestampPattern = timestampPattern;
-            HourOffset = hourOffset;
+            Offset = offset;
         }
     }
 }

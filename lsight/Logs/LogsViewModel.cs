@@ -35,7 +35,7 @@ namespace lsight.Logs
         {
             using(viewSource.DeferRefresh())
                 foreach (var line in timestampingService.Timestamp(File.ReadLines(message.Path), message.TimestampPattern))
-                    source.Add(new LogLineViewModel(line.Line, message.Path, message.Color, line.Timestamp, message.HourOffset));
+                    source.Add(new LogLineViewModel(line, message.Path, message.Offset, message.Color));
         }
 
         public ListCollectionView Lines

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 using Caliburn.Micro;
+using lsight.Model;
 
 namespace lsight.Logs.Lines
 {
@@ -8,14 +9,14 @@ namespace lsight.Logs.Lines
     {
         private SolidColorBrush brush;
         private string contents;
-        private int hourOffset;
+        private LogOffset offset;
 
-        public LogLineViewModel(string contents, string path, Color color, DateTime timestamp, int hourOffset)
+        public LogLineViewModel(TimestampedLine line, string path, LogOffset offset, Color color)
         {
-            Contents = contents;
+            Contents = line.Line;
             Path = path;
-            Timestamp = timestamp;
-            HourOffset = hourOffset;
+            Timestamp = line.Timestamp;
+            Offset = offset;
             Brush = new SolidColorBrush(color);
         }
 
@@ -32,13 +33,13 @@ namespace lsight.Logs.Lines
         public string Path { get; set; }
         public DateTime Timestamp { get; set; }
 
-        public int HourOffset
+        public LogOffset Offset
         {
-            get { return hourOffset; }
+            get { return offset; }
             set
             {
-                hourOffset = value;
-                NotifyOfPropertyChange(() => HourOffset);
+                offset = value;
+                NotifyOfPropertyChange(() => Offset);
             }
         }
 
@@ -52,16 +53,16 @@ namespace lsight.Logs.Lines
             }
         }
 
-        public DateTime TimestampIncludingOffset { get { return Timestamp.AddHours(HourOffset); } }
+        public DateTime TimestampIncludingOffset { get { return Timestamp.Add(Offset.Timespan); } }
 
         public void ChangeColor(Color color)
         {
             Brush = new SolidColorBrush(color);
         }
 
-        public void ChangeHourOffset(int hourOffset)
+        public void ChangeHourOffset(LogOffset hourOffset)
         {
-            HourOffset = hourOffset;
+            Offset = hourOffset;
         }
     }
 }

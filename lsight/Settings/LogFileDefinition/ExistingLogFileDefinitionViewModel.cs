@@ -1,6 +1,7 @@
 using System.Windows.Media;
 using Caliburn.Micro;
 using lsight.Commands;
+using lsight.Model;
 
 namespace lsight.Settings.LogFileDefinition
 {
@@ -9,19 +10,18 @@ namespace lsight.Settings.LogFileDefinition
         private readonly IEventAggregator aggregator;
         private readonly bool initializing;
         private Color color;
-        private int hourOffset;
+        private LogOffset offset;
         private string path;
         private string timestampPattern;
 
-        public ExistingLogFileDefinitionViewModel(string path, Color color, string timestampPattern, int hourOffset,
-                                                  IEventAggregator aggregator)
+        public ExistingLogFileDefinitionViewModel(LogFile logFile, IEventAggregator aggregator)
         {
             initializing = true;
             this.aggregator = aggregator;
-            Path = path;
-            Color = color;
-            TimestampPattern = timestampPattern;
-            HourOffset = hourOffset;
+            Path = logFile.Path;
+            Color = logFile.Color;
+            TimestampPattern = logFile.TimestampPattern;
+            Offset = logFile.Offset;
             initializing = false;
         }
 
@@ -58,13 +58,13 @@ namespace lsight.Settings.LogFileDefinition
             }
         }
 
-        public int HourOffset
+        public LogOffset Offset
         {
-            get { return hourOffset; }
+            get { return offset; }
             set
             {
-                hourOffset = value;
-                NotifyOfPropertyChange(() => HourOffset);
+                offset = value;
+                NotifyOfPropertyChange(() => Offset);
             }
         }
 

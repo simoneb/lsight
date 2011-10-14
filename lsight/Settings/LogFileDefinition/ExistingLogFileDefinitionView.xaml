@@ -8,8 +8,8 @@
         <Label Target="{Binding ElementName=TimestampPattern}">Timestamp pattern:</Label>
         <TextBlock x:Name="TimestampPattern" MinWidth="80" VerticalAlignment="Center"></TextBlock>
         <Separator Width="5" Background="{x:Null}"></Separator>
-        <Label Target="{Binding ElementName=HourOffset}">Hour offset:</Label>
-        <TextBlock x:Name="HourOffset" MinWidth="20" VerticalAlignment="Center" />
+        <Label Target="{Binding ElementName=Offset}">Offset:</Label>
+        <TextBlock x:Name="Offset" MinWidth="20" Text="{Binding Offset,Converter={StaticResource OffsetConverter}}" VerticalAlignment="Center" />
     	<Separator Width="5" Background="{x:Null}"></Separator>
         <Controls:ColorPicker Width="50" SelectedColor="{Binding Color}"></Controls:ColorPicker>
         <Separator Width="15" Background="{x:Null}"></Separator>

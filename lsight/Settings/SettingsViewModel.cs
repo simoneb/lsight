@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using lsight.Commands;
 using lsight.Events;
+using lsight.Model;
 using lsight.Settings.LogFileDefinition;
 using System.Linq;
 
@@ -56,8 +57,10 @@ namespace lsight.Settings
                 return;
             }
 
-            LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(message.Path, message.Color, message.TimestampPattern, message.HourOffset, aggregator));
-            aggregator.Publish(new LogFileDefinitionAdded(message.Path, message.Color, message.TimestampPattern, message.HourOffset));
+            var logFile = new LogFile(message.Path, message.Color, message.TimestampPattern, message.Offset);
+
+            LogDefinitions.Add(new ExistingLogFileDefinitionViewModel(logFile, aggregator));
+            aggregator.Publish(new LogFileDefinitionAdded(message.Path, message.Color, message.TimestampPattern, message.Offset));
         }
 
         public void Handle(RemoveLogFileDefinitionCommand message)

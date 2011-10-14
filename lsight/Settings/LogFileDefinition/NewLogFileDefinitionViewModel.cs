@@ -4,6 +4,7 @@ using System.Windows.Media;
 using Caliburn.Micro;
 using lsight.Commands;
 using lsight.Events;
+using lsight.Model;
 using lsight.Services;
 using lsight.Settings.Preview;
 using Microsoft.Win32;
@@ -19,7 +20,7 @@ namespace lsight.Settings.LogFileDefinition
         private readonly ITimestampingService timestampingService;
         private readonly IWindowManager windowManager;
         private Color color;
-        private int hourOffset;
+        private LogOffset offset;
 
         private string path;
         private string timestampPattern;
@@ -37,7 +38,7 @@ namespace lsight.Settings.LogFileDefinition
             this.settingsStorage = settingsStorage;
 
             timestampPatterns = new ObservableCollection<string>(settingsStorage.RecentTimestampPatterns);
-
+            Offset = LogOffset.Zero;
             aggregator.Subscribe(this);
         }
 
@@ -75,13 +76,13 @@ namespace lsight.Settings.LogFileDefinition
             }
         }
 
-        public int HourOffset
+        public LogOffset Offset
         {
-            get { return hourOffset; }
+            get { return offset; }
             set
             {
-                hourOffset = value;
-                NotifyOfPropertyChange(() => HourOffset);
+                offset = value;
+                NotifyOfPropertyChange(() => Offset);
             }
         }
 
@@ -106,16 +107,12 @@ namespace lsight.Settings.LogFileDefinition
             get { return !string.IsNullOrEmpty(Path) && !string.IsNullOrEmpty(TimestampPattern); }
         }
 
-        #region IHandle<LogFileDefinitionAdded> Members
-
         public void Handle(LogFileDefinitionAdded message)
         {
             Path = string.Empty;
             Color = new Color();
-            HourOffset = 0;
+            Offset = LogOffset.Zero;
         }
-
-        #endregion
 
         public void EditTimestampPattern(string text)
         {
@@ -148,7 +145,7 @@ namespace lsight.Settings.LogFileDefinition
 
         public void Add()
         {
-            aggregator.Publish(new AddLogFileDefinitionCommand(Path, Color, TimestampPattern, HourOffset));
+            aggregator.Publish(new AddLogFileDefinitionCommand(Path, Color, TimestampPattern, Offset));
 
             RememberTimestampPattern();
         }
