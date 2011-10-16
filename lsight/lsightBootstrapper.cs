@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Primitives;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using Caliburn.Micro;
 using lsight.Services;
 using lsight.Shell;
@@ -13,9 +15,14 @@ namespace lsight
     public class lsightBootstrapper : Bootstrapper<IShell>
     {
         private CompositionContainer container;
+        private readonly string addinsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Addins");
+        readonly ILog debugLog = new DebugLog();
+        private const string AddinNamePattern = "lsight.*.dll";
 
         protected override void Configure()
         {
+            LogManager.GetLog = type => debugLog;
+
             container = new CompositionContainer(new AggregateCatalog(
                 AssemblySource.Instance.Select(x => new AssemblyCatalog(x)).OfType<ComposablePartCatalog>()));
 
@@ -34,6 +41,21 @@ namespace lsight
 
             Application.MainWindow.Height = 300;
             Application.MainWindow.Width = 300;
+        }
+
+        protected override IEnumerable<Assembly> SelectAssemblies()
+        {
+            return base.SelectAssemblies().Union(Addins);
+        }
+
+        private IEnumerable<Assembly> Addins
+        {
+            get
+            {
+                return Directory.Exists(addinsFolder)
+                           ? Directory.EnumerateFiles(addinsFolder, AddinNamePattern).Select(Assembly.LoadFile)
+                           : Enumerable.Empty<Assembly>();
+            }
         }
 
         protected override void OnExit(object sender, EventArgs e)

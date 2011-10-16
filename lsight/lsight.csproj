@@ -69,8 +69,10 @@
     <Compile Include="Commands\AddLogFileDefinitionCommand.cs" />
     <Compile Include="Commands\ChangeLogFileColorCommand.cs" />
     <Compile Include="Commands\RemoveLogFileDefinitionCommand.cs" />
+    <Compile Include="Converters\HiddenIfEmptyConverter.cs" />
     <Compile Include="Converters\OffsetConverter.cs" />
     <Compile Include="Converters\TimestampConverter.cs" />
+    <Compile Include="DebugLog.cs" />
     <Compile Include="Events\LogFileDefinitionAdded.cs" />
     <Compile Include="Events\LogFileDefinitionAlreadyExists.cs" />
     <Compile Include="Events\LogFileDefinitionRemoved.cs" />
@@ -190,6 +192,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\close-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\lsight.Extensibility\lsight.Extensibility.csproj">
+      <Project>{5DEE250B-DA24-4548-8560-983834B1962C}</Project>
+      <Name>lsight.Extensibility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

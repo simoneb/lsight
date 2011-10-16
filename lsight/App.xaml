@@ -10,6 +10,7 @@
             </ResourceDictionary.MergedDictionaries>
             <Converters:TimestampConverter x:Key="TimestampConverter" />
             <Converters:OffsetConverter x:Key="OffsetConverter" />
+            <Converters:HiddenIfEmptyConverter x:Key="HiddenIfEmptyConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Windows;
 using Caliburn.Micro;
 using lsight.Events;
+using lsight.Extensibility;
 using lsight.Logs;
 using lsight.Notification;
 using lsight.Settings;
@@ -11,17 +13,17 @@ using Microsoft.Win32;
 namespace lsight.Shell
 {
     [Export(typeof(IShell))]
-    class ShellViewModel : IShell, IHaveDisplayName, IHandle<LogFileDefinitionAlreadyExists>
+    class ShellViewModel : PropertyChangedBase, IShell, IHaveDisplayName, IHandle<LogFileDefinitionAlreadyExists>
     {
         private readonly IEventAggregator eventAggregator;
         private readonly IWindowManager windowManager;
 
         [ImportingConstructor]
-        public ShellViewModel(IEventAggregator eventAggregator, IWindowManager windowManager)
+        public ShellViewModel(IEventAggregator eventAggregator, IWindowManager windowManager, [ImportMany] IEnumerable<IAddinSettingsViewModel> addins)
         {
             this.eventAggregator = eventAggregator;
             this.windowManager = windowManager;
-
+            Addins = new ObservableCollection<IAddinSettingsViewModel>(addins);
             eventAggregator.Subscribe(this);
         }
 
@@ -31,9 +33,19 @@ namespace lsight.Shell
         [Import]
         public ISettings Settings { get; set; }
         
+        public void ShowAddinSettings(IAddinSettingsViewModel model)
+        {
+            windowManager.ShowWindow(model);
+        }
+
         public void Export()
         {
-            var d = new SaveFileDialog() { DefaultExt = ".txt", AddExtension = true, Filter = "Text Files (*.txt)|*.txt|Xml files (*.xml)|*.xml|All Files (*.*)|*.*" };
+            var d = new SaveFileDialog
+            {
+                DefaultExt = ".txt",
+                AddExtension = true,
+                Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+            };
             
             if (d.ShowDialog() == true)
                 Logs.Export(d.FileName);
@@ -42,6 +54,18 @@ namespace lsight.Shell
         public void Exit()
         {
             Application.Current.Shutdown();
+        }
+
+        private ObservableCollection<IAddinSettingsViewModel> addins;
+
+        public ObservableCollection<IAddinSettingsViewModel> Addins
+        {
+            get { return addins; }
+            set
+            {
+                addins = value;
+                NotifyOfPropertyChange(() => Addins);
+            }
         }
 
         public string DisplayName
