@@ -35,7 +35,7 @@ namespace lsight.Shell
         
         public void ShowAddinSettings(IAddinSettingsViewModel model)
         {
-            windowManager.ShowWindow(model);
+            windowManager.ShowDialog(model);
         }
 
         public void Export()

@@ -21,7 +21,7 @@ namespace lsight.Services
             return lines.Select(l => new TimestampedLine
             {
                 Timestamp = DateTime.ParseExact(regex.Match(l).Groups["timestamp"].Value, timestampPattern, CultureInfo.InvariantCulture),
-                Line = l
+                Contents = l
             });
         }
     }

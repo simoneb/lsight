@@ -39,6 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAddinSettingsViewModel.cs" />
+    <Compile Include="IFilterAddin.cs" />
+    <Compile Include="ITimestampedLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

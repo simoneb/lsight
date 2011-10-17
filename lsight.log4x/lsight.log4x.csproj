@@ -52,6 +52,10 @@
       <DependentUpon>LevelColorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="LevelColorViewModel.cs" />
+    <Compile Include="Model\Filter.cs" />
+    <Compile Include="Model\ISettings.cs" />
+    <Compile Include="Model\LoggingLevel.cs" />
+    <Compile Include="Model\Settings.cs" />
     <Compile Include="SettingsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsView.xaml.cs">

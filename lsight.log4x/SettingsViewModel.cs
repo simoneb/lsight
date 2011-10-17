@@ -1,29 +1,32 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Windows.Media;
 using Caliburn.Micro;
 using lsight.Extensibility;
+using lsight.log4x.Model;
 
 namespace lsight.log4x
 {
     [Export(typeof(IAddinSettingsViewModel))]
     public class SettingsViewModel : PropertyChangedBase, IAddinSettingsViewModel
     {
-        private readonly IEnumerable<string> loggingLevels = new[] {"DEBUG", "INFO", "WARN", "ERROR", "FATAL"};
+        private readonly ISettings settings;
+
         private ObservableCollection<LevelColorViewModel> levelColors;
 
         private ObservableCollection<string> levelFilter;
 
         private string selectedLevelFilter;
 
-        public SettingsViewModel()
+        [ImportingConstructor]
+        public SettingsViewModel(ISettings settings)
         {
-            LevelColors = new ObservableCollection<LevelColorViewModel>(from level in loggingLevels
-                                                                        select new LevelColorViewModel {LevelName = level, Color = new Color()});
-            LevelFilter = new ObservableCollection<string>(loggingLevels);
-            SelectedLevelFilter = LevelFilter.First();
+            this.settings = settings;
+
+            LevelColors = new ObservableCollection<LevelColorViewModel>(from c in settings.Colors
+                                                                        select new LevelColorViewModel {LevelName = c.Key.Name, Color = c.Value});
+            LevelFilter = new ObservableCollection<string>(LoggingLevel.AllNames);
+            SelectedLevelFilter = settings.Threshold.Name;
         }
 
         public ObservableCollection<LevelColorViewModel> LevelColors
@@ -52,6 +55,7 @@ namespace lsight.log4x
             set
             {
                 selectedLevelFilter = value;
+                settings.ChangeThreshold(LoggingLevel.Parse(value));
                 NotifyOfPropertyChange(() => SelectedLevelFilter);
             }
         }

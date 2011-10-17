@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -7,6 +8,7 @@ using Caliburn.Micro;
 using lsight.Commands;
 using lsight.Events;
 using System.Linq;
+using lsight.Extensibility;
 using lsight.Logs.Lines;
 using lsight.Services;
 
@@ -16,14 +18,16 @@ namespace lsight.Logs
     class LogsViewModel : Screen, ILogs, IHandle<LogFileDefinitionAdded>, IHandle<LogFileDefinitionRemoved>, IHandle<ChangeLogFileColorCommand>
     {
         private readonly ITimestampingService timestampingService;
+        private readonly IEnumerable<IFilterAddin> filters;
         private readonly ObservableCollection<LogLineViewModel> source = new ObservableCollection<LogLineViewModel>();
         private readonly CollectionViewSource viewSource = new CollectionViewSource();
         private ListCollectionView lines;
 
         [ImportingConstructor]
-        public LogsViewModel(IEventAggregator aggregator, ITimestampingService timestampingService)
+        public LogsViewModel(IEventAggregator aggregator, ITimestampingService timestampingService, [ImportMany]IEnumerable<IFilterAddin> filters)
         {
             this.timestampingService = timestampingService;
+            this.filters = filters;
             aggregator.Subscribe(this);
 
             viewSource.Source = source;
@@ -34,7 +38,8 @@ namespace lsight.Logs
         public void Handle(LogFileDefinitionAdded message)
         {
             using(viewSource.DeferRefresh())
-                foreach (var line in timestampingService.Timestamp(File.ReadLines(message.Path), message.TimestampPattern))
+                foreach (var line in timestampingService.Timestamp(File.ReadLines(message.Path), message.TimestampPattern)
+                                                        .Where(l => filters.All(f => f.Allow(l))))
                     source.Add(new LogLineViewModel(line, message.Path, message.Offset, message.Color));
         }
 

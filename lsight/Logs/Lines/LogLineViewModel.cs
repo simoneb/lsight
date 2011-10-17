@@ -13,7 +13,7 @@ namespace lsight.Logs.Lines
 
         public LogLineViewModel(TimestampedLine line, string path, LogOffset offset, Color color)
         {
-            Contents = line.Line;
+            Contents = line.Contents;
             Path = path;
             Timestamp = line.Timestamp;
             Offset = offset;
